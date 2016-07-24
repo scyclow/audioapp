@@ -1,0 +1,42 @@
+@import 'https://fonts.googleapis.com/css?family=Inconsolata:400,700';
+
+
+body {
+  background-color: #444;
+}
+
+#app {
+  width: 805px;
+}
+
+.track {
+  font-size: 20px;
+  padding: 1em;
+  margin: 2em;
+
+  height: 80%;
+  min-height: 80%;
+  max-height: 80%;
+
+  width: 16em;
+  max-width: 16em;
+
+  border: 0.35em solid #690;
+  background-color: #ddd;
+
+  word-spacing: 0.75em;
+  text-align: center;
+  font-family: 'Inconsolata', monospace;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.controls {
+  text-align: center;
+}
+
+#start {
+  font-size: 20px;
+  padding: 0.5em;
+  cursor: pointer;
+}
