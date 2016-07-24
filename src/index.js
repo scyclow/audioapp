@@ -129,9 +129,18 @@ function getPlayFn(note) {
   }
 }
 
+const playingTracks = {};
+
 // execute each track
 function loopTrack(noise, track, bpm) {
-  noise.start();
+  // if track is currently running
+  if (noise.state === 'RUNNING') {
+    // kill the track
+    clearInterval(playingTracks[track.number]);
+
+  } else {
+    noise.start();
+  }
 
   let i = 0;
 
@@ -146,13 +155,13 @@ function loopTrack(noise, track, bpm) {
       setTimeout(
         () => {
           playFn(noise, durPerNote)
-          console.log(new Date, `(${noise.number})`, note, durPerNote)
+          console.log(new Date, `(${track.number})`, note, durPerNote)
         },
         durPerNote * ix
       );
     })
 
-    // contiuously loop over tracl
+    // contiuously loop over track
     if (++i >= track.length) i = 0;
   };
 
@@ -161,6 +170,9 @@ function loopTrack(noise, track, bpm) {
     play(duration),
     duration
   );
+
+  const kill = update(duration)
+  playingTracks[track.number] = kill;
 
   window.change = (t) => update(bpm2ms(t));
 
@@ -203,20 +215,22 @@ const testTrack = [
 
 // Application logic
 const map$ = ($, fn)=> [].map.call($, fn);
+const each$ = ($, fn)=> [].forEach.call($, fn);
 const tracks = document.getElementsByClassName('track');
 // get all the notes for each track
 const cleanTrack = (track) => compact( track.value.split('\n') )
 
 // make a noise for each track
 const noises = map$(tracks, () => new Noise());
-noises.forEach((noise, i) => noise.number = i)
 
 document.getElementById('start').onclick = () => {
   map$(tracks, cleanTrack).forEach((track, i) => {
+    track.number = i;
     if (track.length) {
-      let noise = noises[i];
-      noise.kill();
-      loopTrack(noise, track, 120)
+      const noise = noises[i];
+      const bpm = 120;
+
+      loopTrack(noise, track, bpm)
     }
   })
 }
