@@ -1,7 +1,5 @@
 /*
   TODO
-    Start button actually updates
-
     save hash to url
 
     UI - change BPM
