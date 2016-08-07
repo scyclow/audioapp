@@ -25,12 +25,46 @@
       <textarea class="track"></textarea>
     </div>
     <div class="controls">
-      <button id="start">start</button>
+      <button id="start">|> PLAY</button>
     </div>
   </div>
 
   <div id="documentation">
-    <!-- TODO write documentation -->
+    Each box represents a track, and each line represents one beat (at 120bpm). Lines support the following:
+    <table class="doc-examples">
+      <tr>
+        <th>Supported</th>
+        <th>Example</th>
+      </tr>
+      <tr>
+        <td>Raw frequencies</td>
+        <td>2000</td>
+      </tr>
+      <tr>
+        <td>Notes (upper/lowercase)</td>
+        <td>A</td>
+      </tr>
+      <tr>
+        <td>Sharp notes</td>
+        <td>A$</td>
+      </tr>
+      <tr>
+        <td>Flat Notes</td>
+        <td>A_</td>
+      </tr>
+      <tr>
+        <td>Multiple notes per beat</td>
+        <td>A E A D</td>
+      </tr>
+      <tr>
+        <td>Modulation between notes</td>
+        <td>A. E A. D</td>
+      </tr>
+      <tr>
+        <td>Skip notes</td>
+        <td>A - D</td>
+      </tr>
+    </table>
   </div>
 
   <script src="build/build.js"></script>

@@ -1,3 +1,5 @@
+// @flow
+
 /*
   TODO
     Start button actually updates
@@ -16,6 +18,11 @@
 
 */
 
+function someDec(klass) {
+  return klass;
+}
+
+
 
 import Noise from './utils/Noise';
 import dynamicInterval from './utils/dynamicInterval';
@@ -24,9 +31,9 @@ import { compact } from './utils/misc';
 // TODO import babel polyfill
 
 
-const isNumber = (num) => !!(num === 0 || num && !isNaN(num))
+const isNumber = (num): booleant => !!(num === 0 || num && !isNaN(num))
 
-const getNote = (a, i) => a * (2 ** (i/12));
+const getNote = (a: number, i: number): number => a * (2 ** (i/12));
 
 const a = 27.5;
 const NOTES = {
@@ -50,7 +57,7 @@ const NOTES = {
 };
 
 // (note: string) -> number
-function interpretNote(note) {
+function interpretNote(note: string): number {
   // get the frequency of the base note (ex. a sharp)
   const magIx = '$_'.includes(note[1]) ? 2 : 1;
   const baseNote = note.slice(0, magIx).toLowerCase();
@@ -90,16 +97,16 @@ function playSilence(noise) {
   noise.mute();
 }
 
-function bpm2ms(bpm) {
+function bpm2ms(bpm: number): number {
   const bps = bpm / 60;
   const ms = 1000 / bps;
 
   return Math.round(ms);
 }
 
-const lastIx = (str) => str.length - 1;
-const last = (str) => str[lastIx(str)];
-const exceptLast = (str) => str.slice(0, lastIx(str));
+const lastIx = (str: string | array): number => str.length - 1;
+const last = (str: string | array): number => str[lastIx(str)];
+const exceptLast = (str: string | array): number => str.slice(0, lastIx(str));
 
 const isRawFreq = (note) => isNumber(note);
 
@@ -109,8 +116,8 @@ function getPlayFn(note) {
   // is note a flow, or regular play? or just silence?
   let rawNote, playFn;
   if (note === '-') {
+    rawNote = '0';
     playFn = playSilence;
-    rawNote = 0;
 
   } else if (isFlow(note)) {
     rawNote = exceptLast(note);
@@ -122,7 +129,7 @@ function getPlayFn(note) {
   }
 
   // find the frequency of the note
-  const parsedNote = isRawFreq(rawNote) ? rawNote : interpretNote(rawNote);
+  const parsedNote: string = isRawFreq(rawNote) ? rawNote : interpretNote(rawNote);
 
   return (noise, dur) => {
     playFn(noise, parsedNote, dur)
@@ -144,10 +151,10 @@ function loopTrack(noise, track, bpm) {
 
   let i = 0;
 
-  const play = (dur) => () => {
+  const play = (dur: number = 0) => () => {
     // get all notes in measure
     const notes = track[i].split(' ');
-    const durPerNote = dur/notes.length;
+    const durPerNote = dur / notes.length;
 
     // play each note in measure
     notes.forEach((note, ix) => {

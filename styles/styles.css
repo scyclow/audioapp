@@ -1,12 +1,13 @@
 @import 'https://fonts.googleapis.com/css?family=Inconsolata:400,700';
 
-
 body {
   background-color: #444;
 }
 
 #app {
   width: 805px;
+  /*display: inline-block;*/
+  border: 1px solid white
 }
 
 .track {
@@ -39,4 +40,19 @@ body {
   font-size: 20px;
   padding: 0.5em;
   cursor: pointer;
+}
+
+#documentation {
+  display: inline-block;
+  border: 1px solid white
+}
+
+#documentation, #documentation * {
+  font-family: 'Inconsolata', monospace;
+  color: #ddd;
+  width: 260px;
+}
+
+.doc-examples td, .doc-examples th {
+  padding: 0.5em;
 }
